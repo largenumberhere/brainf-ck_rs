@@ -3,8 +3,7 @@ use std::io::{Read, Write};
 
 fn main() {
     let file_name = std::env::args()
-        .skip(1)
-        .next()
+        .nth(1)
         .expect("Need an argument for the file to run");
 
     let code = std::fs::read_to_string(file_name)
@@ -28,7 +27,6 @@ impl Context {
     fn new(code: &str) -> Context {
         let instructions = code.as_bytes().to_vec();
 
-
         let mut stack = Vec::default();
         let mut brace_pairs = HashMap::new();
 
@@ -36,15 +34,16 @@ impl Context {
             let c = *c as char;
             if c == '[' {
                 stack.push(i);
-            } else if (c == ']') {
+            } else if c == ']' {
                 let other = stack.pop()
                     .expect("unmatched closing square bracket");
+
                 brace_pairs.insert(i, other);
                 brace_pairs.insert(other, i);
             }
         }
 
-        if stack.len() !=0 {
+        if stack.is_empty() {
             panic!("Unmatched opening square bracket");
         }
 
