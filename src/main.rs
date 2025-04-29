@@ -43,7 +43,7 @@ impl Context {
             }
         }
 
-        if stack.is_empty() {
+        if !stack.is_empty() {
             panic!("Unmatched opening square bracket");
         }
 
