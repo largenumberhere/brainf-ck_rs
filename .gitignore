@@ -1,3 +1,5 @@
 /target
 /.idea
 /.vscode
+/transpiler/target
+/transpiler/.idea
